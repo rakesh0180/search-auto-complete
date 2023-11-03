@@ -1,0 +1,126 @@
+* {
+  box-sizing: border-box;
+}
+
+.multiple-search-container {
+  width: calc(100vw - 5vw);
+
+  .header {
+    text-align: center;
+  }
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .search-container-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    .search-container {
+      padding: 0.4rem;
+      flex: 0 0 35vw;
+      outline: 1px solid grey;
+      display: flex;
+      flex-wrap: wrap;
+      border-radius: 5px;
+
+      .card {
+        display: flex;
+        margin: 3px;
+        padding: 3px 7px;
+        /* A simple box-shadow with a horizontal and vertical offset, blur, and color */
+        box-shadow: 5px 5px 3px -1px rgba(0, 0, 0, 0.5);
+        /* box-shadow: 1px 1px 1px grey; */
+
+        .cancel-selected-item {
+          margin-left: 0.2rem;
+          padding: 0 3px;
+          border: 1px solid grey;
+          border-radius: 50%;
+          cursor: pointer;
+        }
+      }
+
+      .search-auto-complete {
+        border: none;
+        outline: none;
+        flex: 1;
+        /* Prevent text from wrapping to the next line */
+        white-space: nowrap;
+        /* Hide any text that overflows the container */
+        overflow: hidden;
+        /* Add an ellipsis when text overflows */
+        text-overflow: ellipsis;
+        padding-left: 3px;
+      }
+    }
+  }
+}
+
+.option-box {
+  margin-top: 5px;
+  background: #fff;
+  padding: 3px;
+  border-radius: 5px;
+  border: 1px solid #4599c3;
+  border-radius: 4px;
+  max-height: 13.375rem;
+  overflow-y: auto;
+  /* display: flex;
+  flex-direction: column; */
+
+  .option-box-item {
+    padding: 7px;
+    width: 33.5vw;
+    display: flex;
+    align-items: center;
+    & input {
+      padding: 7px;
+    }
+    & label {
+      padding: 7px;
+      cursor: pointer;
+      flex: 1 0 auto;
+    }
+    &:hover {
+      background-color: #4599c3;
+      border-radius: 5px;
+
+      label {
+        color: #fff;
+      }
+    }
+  }
+}
+
+.error {
+  color: red;
+}
+
+.options-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  .options-wrapper {
+    padding: 2px 5px;
+    flex: 0 0 35vw;
+    margin-top: 1px;
+    padding-top: 2px;
+    border: 1px solid grey;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .options {
+      border: 1px dotted goldenrod;
+      padding: 2px 5px;
+    }
+  }
+}
