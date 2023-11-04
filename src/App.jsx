@@ -6,6 +6,7 @@ const App = () => {
   const [data, setData] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [value, setValue] = useState("");
+  const [isApicall, setIsApicall] = useState(false);
   const [error, setError] = useState("");
   const [loader, setLoader] = useState(false);
   const inputRef = useRef(null);
@@ -16,6 +17,7 @@ const App = () => {
   const handleChange = (e) => {
     const newValue = e.target.value;
     setValue(newValue);
+    setIsApicall(false);
   };
 
   /**
@@ -67,6 +69,7 @@ const App = () => {
   useEffect(() => {
     controller.abort();
     if (debounceValue.length > 0) {
+      setIsApicall(false);
       setLoader(true);
       //   controller = new AbortController(); // Create a new controller
       //   const signal = controller.signal; // Get the new controller's signal
@@ -75,8 +78,10 @@ const App = () => {
           return res.json();
         })
         .then((data) => {
-          setData(data.results);
+          const apiData = data;
+          setData(apiData.results);
           setLoader(false);
+          setIsApicall(true);
         })
         .catch((err) => {
           setError(err);
@@ -126,6 +131,11 @@ const App = () => {
           <div className="option-box-item">Loading ...</div>
         </div>
       )}
+      {data.length === 0 && isApicall && (
+        <div className="option-box">
+          <label className="option-box-item">No Users Found</label>
+        </div>
+      )}
       {!loader && data.length > 0 ? (
         <div className="option-box">
           {data.map((result, i) => (
@@ -145,11 +155,6 @@ const App = () => {
           ))}
         </div>
       ) : null}
-      {data.length === 0 && (
-        <div className="option-box">
-          <label className="text-muted p-1 m-0">No Users Found</label>
-        </div>
-      )}
     </div>
   );
 };
