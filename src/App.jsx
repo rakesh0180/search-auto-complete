@@ -11,8 +11,7 @@ const App = () => {
   const [loader, setLoader] = useState(false);
   const inputRef = useRef(null);
   const debounceValue = useDebounce(value, 500);
-  const controller = new AbortController(); // Create an AbortController
-  const signal = controller.signal; // Get the controller's signal
+  const controller = useRef(); // Use a ref for the AbortController
 
   const handleChange = (e) => {
     const newValue = e.target.value;
@@ -67,13 +66,16 @@ const App = () => {
   }, [selectedOptions]);
 
   useEffect(() => {
-    controller.abort();
+    if (controller.current) {
+      // If there is a pending request, cancel it
+      controller.current.abort();
+    }
     if (debounceValue.length > 0) {
       setIsApicall(false);
       setLoader(true);
-      //   controller = new AbortController(); // Create a new controller
-      //   const signal = controller.signal; // Get the new controller's signal
-      fetch(`https://swapi.dev/api/people/?search=${value} `)
+      controller.current = new AbortController(); // Create a new controller
+      const signal = controller.current.signal;
+      fetch(`https://swapi.dev/api/people/?search=${value} `, { signal })
         .then((res) => {
           return res.json();
         })
